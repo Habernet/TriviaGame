@@ -9,29 +9,30 @@
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
     <title>Trivia Game!</title>
 </head>
 
 <body>
     <div class="wrapper">
-        <div class="main-content">
+        <div class="main-content centered">
             <div class="row">
-                <div class="col" id="banner"></div>
-                <button type="button" class="btn btn-primary btn-lg">Large button</button>
+                <div class="col-md-12" id="banner">
+                    <h1>World War 2 Trivia!</h1>
+                </div>
+                <div class="col-md-12"> <button type="button" class="btn btn-primary btn-lg start">Start Game!</button>
+                </div>
             </div>
             <div class="test-area">
                 <div class="row">
                     <div class="col" id="timer"></div>
                 </div>
                 <div class="row">
-                    <div class="col" id="question-true-false"></div>
+                    <div class="col-md-12" id="question-true-false"></div>
+                    <div class="col-md-12" id="correct-image"></div>
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <div class="row" id="question-1"></div>
-                        <div class="row" id="question-2"></div>
-                        <div class="row" id="question-3"></div>
-                        <div class="row" id="question-4"></div>
+                    <div class="col" id="answers">
                     </div>
                 </div>
 
@@ -40,6 +41,6 @@
     </div>
 
 </body>
-<script src="/assets/javascript/app.js"></script>
+<script src="assets/javascript/app.js"></script>
 
 </html>

@@ -1,0 +1,25 @@
+* {
+    box-sizing: border-box;
+}
+body{
+    background-color: grey;
+}
+h1{
+    font-weight: bolder;
+}
+.wrapper{
+    width: 1024px;
+    height: auto;
+    margin: 0 auto 0;
+}
+
+.main-content{
+    background-color: bisque;
+    padding: 25px;
+
+}
+
+.centered{
+    text-align: center;
+    margin: 0 auto 0;
+}
