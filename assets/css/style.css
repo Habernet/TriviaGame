@@ -7,6 +7,10 @@ body{
 h1{
     font-weight: bolder;
 }
+img{
+    height: 400px;
+    width: auto;
+}
 .wrapper{
     width: 1024px;
     height: auto;
