@@ -38,58 +38,69 @@ questions = [
 var gameActive = false;
 var questionAnswered = false;
 var outofTime = false;
-var timer = 60;
+var timer = 10;
 var currentQuestion;
 var correct = 0;
 var incorrect = 0;
-// var currentQuestionNumber;
+var currentQuestionNumber= 0;
 
 // Global Functions
 var loadQuestion = function (questionobject) {
     // set this question to the current question variable
     currentQuestion = questionobject;
+    // empty the test area if there is anything there
+    $("#answers").empty();
+    $("#correct-image").empty();
+    $("#question-true-false").empty();
     // uses Jquery to fill the respective DIVs on the page
     $("#question-true-false").text(questionobject.question);
     for (let i = 0; i < questionobject.answers.length; i++) {
-        $("#answers").append('<button class="answerbutton" data-answer="'+ questionobject.answers[i] + '">' + questionobject.answers[i] + '</button>')
+        $("#answers").append('<button class="answerbutton" data-answer="' + questionobject.answers[i] + '">' + questionobject.answers[i] + '</button>')
     }
-    //initialize timer
+    // timer on the page
     $("#timer").text(timer);
     // start the timer
-    timerstart = setInterval(pageTimer, 1000);
+    countdown = setInterval(pageTimer, 1000);
 }
-var nextQuestion = function () {
-    // uses Jquery to load the next question onto the page
-}
+
 var timesUp = function () {
-    // stop the timer
-    clearInterval(timerstart);
-    // display correct answer on the page
+    clearInterval(countdown);
+    //reinitialize the timer
+    timer = 10;
+    currentQuestionNumber++;
     $("#question-true-false").text("Time's up! The correct answer is: " + currentQuestion.answer);
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
+    next = setTimeout(loadQuestion(questions[currentQuestionNumber]), 3000);
+    // this runs immediately. does no wait 3 seconds
 }
 var pageTimer = function () {
     timer--;
     $("#timer").html(timer);
     if (timer <= 0) {
-        console.log(timerstart);
+        console.log("times up");
         timesUp();
     }
 }
 
-var chosenCorrectly = function (currentQuestion) {
-    clearInterval(pageTimer);
+var chosenCorrectly = function () {
+    //clear the test area
+    currentQuestionNumber++;
+    clearInterval(countdown);
     $("#question-true-false").text("Correct!");
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
-
+    next = setTimeout(loadQuestion(questions[currentQuestionNumber]), 3000);
 }
 var chosenIncorrectly = function () {
-    clearInterval(pageTimer);
+    // clear the test area
+    currentQuestionNumber++;
+    clearInterval(countdown);
     $("#question-true-false").text("Incorrect! The correct answer is: " + currentQuestion.answer);
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
+    next = setTimeout(loadQuestion(questions[currentQuestionNumber]), 3000);
+
 }
 
-var gameOver = function(){
+var gameOver = function () {
     // this will hide everything on screen and show how many were correct/incorrect etc.
 
 }
@@ -100,30 +111,26 @@ var gameOver = function(){
 // Page loads...Only thing showing is Start button. 
 // Start button on click...gameActive = true, hide start button
 // load a question1 (timer starts)
-// if you click
-
 
 $(document).ready(function () {
-    console.log("here first");
+    console.log("page loaded");
     $(".start").on("click", function () {
-        console.log(gameActive);
         gameActive = true;
-        console.log(gameActive);
         $(".start").hide();
-        loadQuestion(questions[4]);
+        loadQuestion(questions[0]);
     })
     $(document).on("click", ".answerbutton", function (event) {
         console.log("buttonworks");
         console.log("Answer: " + currentQuestion.answer);
-        if ($(event.target).data("name") =='"' + currentQuestion.answer + '"') {
-            console.log("this works");
-            // Right answer, load next question
-            chosenCorrectly(currentQuestion);
+        // if ($(event.target).data("name") == '"' + currentQuestion.answer + '"') {
+        //     console.log("this works");
+        //     // Right answer, load next question
+        //     chosenCorrectly();
 
-        } else {
-            console.log("this works too");
-            // wrong answer, load next question
-            chosenIncorrectly(currentQuestion);
-        }
+        // } else {
+        //     console.log("this works too");
+        //     // wrong answer, load next question
+        //     chosenIncorrectly();
+        // }
     })
 })
