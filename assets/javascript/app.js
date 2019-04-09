@@ -45,7 +45,7 @@ var incorrect = 0;
 var currentQuestionNumber = 0;
 
 // Global Functions
-var clearTestArea = function(){
+var clearTestArea = function () {
     $("#answers").empty();
     $("#correct-image").empty();
     $("#question-true-false").empty();
@@ -56,7 +56,7 @@ var loadQuestion = function (questionobject) {
     clearTestArea();
     $("#question-true-false").text(questionobject.question);
     for (let i = 0; i < questionobject.answers.length; i++) {
-        $("#answers").append('<button class="answerbutton" data-answer="' + questionobject.answers[i] + '">' + questionobject.answers[i] + '</button>')
+        $("#answers").append('<button class="answerbutton btn btn-secondary" data-answer="' + questionobject.answers[i] + '">' + questionobject.answers[i] + '</button>')
     }
     $("#timer").text(timer);
     countdown = setInterval(pageTimer, 1000);
@@ -69,7 +69,9 @@ var timesUp = function () {
     clearTestArea();
     $("#question-true-false").text("Time's up! The correct answer is: " + currentQuestion.answer);
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
-    setTimeout(loadQuestion(questions[currentQuestionNumber]), 3000);
+    setTimeout(function () {
+        loadQuestion(questions[currentQuestionNumber]);
+    }, 3000);
 }
 
 var pageTimer = function () {
@@ -88,8 +90,9 @@ var chosenCorrectly = function () {
     clearTestArea();
     $("#question-true-false").text("Correct!");
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
-    next = set
-    Timeout(loadQuestion(questions[currentQuestionNumber]), 3000);
+    setTimeout(function () {
+        loadQuestion(questions[currentQuestionNumber]);
+    }, 3000);
 }
 var chosenIncorrectly = function () {
     currentQuestionNumber++;
@@ -98,7 +101,9 @@ var chosenIncorrectly = function () {
     clearTestArea();
     $("#question-true-false").text("Incorrect! The correct answer is: " + currentQuestion.answer);
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
-    next = setTimeout(loadQuestion(questions[currentQuestionNumber]), 3000);
+    setTimeout(function () {
+        loadQuestion(questions[currentQuestionNumber]);
+    }, 3000);
 }
 
 var gameOver = function () {

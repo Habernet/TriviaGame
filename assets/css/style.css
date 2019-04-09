@@ -13,17 +13,22 @@ img{
 }
 .wrapper{
     width: 1024px;
-    height: auto;
-    margin: 0 auto 0;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .main-content{
     background-color: bisque;
     padding: 25px;
-
+    height: 750px;
+    width: 75%;
 }
 
 .centered{
     text-align: center;
     margin: 0 auto 0;
+}
+.answerbutton{
+    margin: 10px;
 }
