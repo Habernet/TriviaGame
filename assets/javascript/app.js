@@ -16,11 +16,11 @@ questions = [
         question: "What year did America join the war?",
         answers: [1939, 1941, 1944, 1945],
         answer: 1941,
-        IMGUrl: "assets/images/ww2map.png"
+        IMGUrl: "assets/images/pearlharbor.jpg"
     },
     {
         question: "What is the date for VE day? (Victory in Europe)",
-        answers: ["1918", "1912", "1945", "1939"],
+        answers: ["May 7th, 1918", "March 5th, 1912", "May 8th, 1945", "October 13th, 1939"],
         answer: "May 8th, 1945",
         IMGUrl: "assets/images/VEday.jpg"
     },
@@ -35,9 +35,6 @@ questions = [
 
 
 // Global Variables
-var gameActive = false;
-var questionAnswered = false;
-var outofTime = false;
 var timer = 10;
 var currentQuestion;
 var correct = 0;
@@ -51,7 +48,9 @@ var clearTestArea = function () {
     $("#question-true-false").empty();
     $("#timer").text("");
 }
+
 var loadQuestion = function (questionobject) {
+    // if current question is out of range...game over
     currentQuestion = questionobject;
     clearTestArea();
     $("#question-true-false").text(questionobject.question);
@@ -61,19 +60,6 @@ var loadQuestion = function (questionobject) {
     $("#timer").text(timer);
     countdown = setInterval(pageTimer, 1000);
 }
-
-var timesUp = function () {
-    clearInterval(countdown);
-    timer = 10;
-    currentQuestionNumber++;
-    clearTestArea();
-    $("#question-true-false").text("Time's up! The correct answer is: " + currentQuestion.answer);
-    $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
-    setTimeout(function () {
-        loadQuestion(questions[currentQuestionNumber]);
-    }, 3000);
-}
-
 var pageTimer = function () {
     timer--;
     $("#timer").html(timer);
@@ -83,27 +69,56 @@ var pageTimer = function () {
     }
 }
 
+var timesUp = function () {
+    clearInterval(countdown);
+    timer = 10;
+    currentQuestionNumber++;
+    clearTestArea();
+    $("#question-true-false").text("Time's up! The correct answer is: " + currentQuestion.answer);
+    $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
+    if (currentQuestionNumber < questions.length) {
+        setTimeout(function () {
+            console.log("if works");
+            loadQuestion(questions[currentQuestionNumber]);
+        }, 3000);
+    } else {
+        gameOver();
+    }
+}
+
 var chosenCorrectly = function () {
     currentQuestionNumber++;
     correct++;
     clearInterval(countdown);
+    timer = 10;
     clearTestArea();
     $("#question-true-false").text("Correct!");
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
-    setTimeout(function () {
-        loadQuestion(questions[currentQuestionNumber]);
-    }, 3000);
+    if (currentQuestionNumber < questions.length) {
+        console.log("if works");
+        setTimeout(function () {
+            loadQuestion(questions[currentQuestionNumber]);
+        }, 3000);
+    } else {
+        gameOver();
+    }
 }
 var chosenIncorrectly = function () {
     currentQuestionNumber++;
     incorrect++;
     clearInterval(countdown);
+    timer = 10;
     clearTestArea();
     $("#question-true-false").text("Incorrect! The correct answer is: " + currentQuestion.answer);
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
-    setTimeout(function () {
-        loadQuestion(questions[currentQuestionNumber]);
-    }, 3000);
+    if (currentQuestionNumber < questions.length) {
+        console.log("if works");
+        setTimeout(function () {
+            loadQuestion(questions[currentQuestionNumber]);
+        }, 3000);
+    } else {
+        gameOver();
+    }
 }
 
 var gameOver = function () {
@@ -123,7 +138,8 @@ $(document).ready(function () {
     $(document).on("click", ".answerbutton", function (event) {
         console.log("buttonworks");
         console.log("Answer: " + currentQuestion.answer);
-        if ($(event.target).data("name") === '"' + currentQuestion.answer + '"') {
+        console.log($(event.target).data("answer"));
+        if ($(event.target).data("answer") === currentQuestion.answer) {
             console.log("chose correctly!");
             chosenCorrectly();
         } else {
