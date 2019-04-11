@@ -42,15 +42,29 @@ var incorrect = 0;
 var currentQuestionNumber = 0;
 
 // Global Functions
+var inBetween = function () {
+    setTimeout(function () {
+        loadQuestion(questions[currentQuestionNumber]);
+    }, 3000);
+}
+var lastQuestion = function () {
+    if (currentQuestionNumber < questions.length) {
+        return false;
+    } else {
+        return true;
+    }
+}
 var clearTestArea = function () {
     $("#answers").empty();
     $("#correct-image").empty();
     $("#question-true-false").empty();
     $("#timer").text("");
+    currentQuestionNumber++; 
+    timer = 10; 
+    clearInterval(countdown);  
 }
 
 var loadQuestion = function (questionobject) {
-    // if current question is out of range...game over
     currentQuestion = questionobject;
     clearTestArea();
     $("#question-true-false").text(questionobject.question);
@@ -70,52 +84,35 @@ var pageTimer = function () {
 }
 
 var timesUp = function () {
-    clearInterval(countdown);
-    timer = 10;
-    currentQuestionNumber++;
+    incorrect++;
     clearTestArea();
     $("#question-true-false").text("Time's up! The correct answer is: " + currentQuestion.answer);
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
-    if (currentQuestionNumber < questions.length) {
-        setTimeout(function () {
-            console.log("if works");
-            loadQuestion(questions[currentQuestionNumber]);
-        }, 3000);
+    if (!lastQuestion()) {
+        inBetween();
     } else {
         gameOver();
     }
 }
 
 var chosenCorrectly = function () {
-    currentQuestionNumber++;
     correct++;
-    clearInterval(countdown);
-    timer = 10;
     clearTestArea();
     $("#question-true-false").text("Correct!");
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
-    if (currentQuestionNumber < questions.length) {
-        console.log("if works");
-        setTimeout(function () {
-            loadQuestion(questions[currentQuestionNumber]);
-        }, 3000);
+    if (!lastQuestion) {
+        inBetween();
     } else {
         gameOver();
     }
 }
 var chosenIncorrectly = function () {
-    currentQuestionNumber++;
     incorrect++;
-    clearInterval(countdown);
-    timer = 10;
     clearTestArea();
     $("#question-true-false").text("Incorrect! The correct answer is: " + currentQuestion.answer);
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
-    if (currentQuestionNumber < questions.length) {
-        console.log("if works");
-        setTimeout(function () {
-            loadQuestion(questions[currentQuestionNumber]);
-        }, 3000);
+    if (!lastQuestion) {
+        inBetween();
     } else {
         gameOver();
     }
