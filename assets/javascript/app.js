@@ -38,22 +38,22 @@ questions = [
 var timer = 10;
 var currentQuestion;
 var correct = 0;
-var incorrect = 0;
 var currentQuestionNumber = 0;
 
 // Global Functions
-var lastQuestion = function () {
-    if (currentQuestionNumber < questions.length) {
-        return false;
-    } else {
-        return true;
-    }
-}
+
 var clearTestArea = function () {
     $("#answers").empty();
     $("#correct-image").empty();
     $("#question-true-false").empty();
     $("#timer").text("");
+}
+var pageTimer = function () {
+    timer--;
+    $("#timer").html(timer);
+    if (timer <= 0) {
+        timesUp();
+    }
 }
 
 var loadQuestion = function (questionobject) {
@@ -66,14 +66,14 @@ var loadQuestion = function (questionobject) {
     $("#timer").text(timer);
     countdown = setInterval(pageTimer, 1000);
 }
-var pageTimer = function () {
-    timer--;
-    $("#timer").html(timer);
-    if (timer <= 0) {
-        console.log("times up");
-        timesUp();
+var lastQuestion = function () {
+    if (currentQuestionNumber < questions.length) {
+        return false;
+    } else {
+        return true;
     }
 }
+
 
 var timesUp = function () {
     clearInterval(countdown);
@@ -87,7 +87,9 @@ var timesUp = function () {
             loadQuestion(questions[currentQuestionNumber]);
         }, 3000);
     } else {
-        gameOver();
+        setTimeout(function () {
+            gameOver();
+        }, 3000);
     }
 }
 
@@ -99,57 +101,55 @@ var chosenCorrectly = function () {
     clearTestArea();
     $("#question-true-false").text("Correct!");
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
-    if (currentQuestionNumber < questions.length) {
-        console.log("if works");
+    if (!lastQuestion()) {
         setTimeout(function () {
             loadQuestion(questions[currentQuestionNumber]);
         }, 3000);
     } else {
-        gameOver();
+        setTimeout(function () {
+            gameOver();
+        }, 3000);
+
     }
 }
 var chosenIncorrectly = function () {
     currentQuestionNumber++;
-    incorrect++;
     clearInterval(countdown);
     timer = 10;
     clearTestArea();
     $("#question-true-false").text("Incorrect! The correct answer is: " + currentQuestion.answer);
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
-    if (currentQuestionNumber < questions.length) {
-        console.log("if works");
+    if (!lastQuestion()) {
         setTimeout(function () {
             loadQuestion(questions[currentQuestionNumber]);
         }, 3000);
     } else {
-        gameOver();
+        setTimeout(function () {
+            gameOver();
+        }, 3000);
     }
 }
 
 var gameOver = function () {
     clearTestArea();
     $("#timer").remove();
-    var total = correct + incorrect;
-    var results = "Game over! You answered " + correct + "/" + total + " correctly!"
-    $("#header-area").append("<h2>" + results + "</h2>");
+    resultstimeout = setTimeout(function () {
+        var results = "Game over! You answered " + correct + "/" + 5 + " correctly!"
+        // Do you only need to count the correct??
+        $("#header-area").append("<h2>" + results + "</h2>");
+    })
+
 }
 
 $(document).ready(function () {
-    console.log("page loaded");
     $(".start").on("click", function () {
-        gameActive = true;
         $(".start").hide();
         loadQuestion(questions[0]);
     })
     $(document).on("click", ".answerbutton", function (event) {
-        console.log("buttonworks");
-        console.log("Answer: " + currentQuestion.answer);
-        console.log($(event.target).data("answer"));
         if ($(event.target).data("answer") === currentQuestion.answer) {
-            console.log("chose correctly!");
             chosenCorrectly();
         } else {
-            console.log("chose incorrectly!");
             chosenIncorrectly();
         }
     })
@@ -157,6 +157,5 @@ $(document).ready(function () {
 
 
 
-// If you are on the last question it doesn't display correct or incorrect. Need to call at different points?
 // Look at refactoring code CORRECTLY
 // Add questions!
