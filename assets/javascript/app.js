@@ -30,7 +30,30 @@ questions = [
         answer: "Fat Man",
         IMGUrl: "assets/images/fatman.jpg"
     },
-
+    {
+        question: "What was Germany's go-to fighter aircraft for most of the war?",
+        answers: ["Focke-Wulf 190", "Messerschmitt BF-109", "Heinkel HE-111", "Supermarine Spitfire"],
+        answer: "Messerschmitt BF-109",
+        IMGUrl: "assets/images/bf109.jpg"
+    },
+    {
+        question: 'Which weapon was referred to as "Hitlers BuzzSaw?"',
+        answers: ["MG-42", "NebelWerfer", "MP-40", "Lee-Enfield"],
+        answer: "MG-42",
+        IMGUrl: "assets/images/mg42.jpg"
+    },
+    {
+        question: "Which battle was essentially Germany's last chance at changing the tide of war?",
+        answers: ["The Battle of the Somme", "The Battle of the Bulge", "D-Day", "Battle of Britain"],
+        answer: "The Battle of the Bulge",
+        IMGUrl: "assets/images/bastogne.jpg"
+    },
+    {
+        question: "What engine made the P51 it's great range and power?",
+        answers: ["Daimler Benz DB-605", "Allison V-1710", "Rolls Royce Merlin", "Junkers Jumo 004"],
+        answer: "Rolls Royce Merlin",
+        IMGUrl: "assets/images/rollsroyce.jpg"
+    }
 ]
 
 
@@ -134,7 +157,7 @@ var gameOver = function () {
     clearTestArea();
     $("#timer").remove();
     resultstimeout = setTimeout(function () {
-        var results = "Game over! You answered " + correct + "/" + 5 + " correctly!"
+        var results = "Game over! You answered " + correct + "/" + 9 + " correctly!"
         // Do you only need to count the correct??
         $("#header-area").append("<h2>" + results + "</h2>");
     })

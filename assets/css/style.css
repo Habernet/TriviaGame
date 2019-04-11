@@ -3,14 +3,14 @@
 }
 body{
     background-color: grey;
-    font-family: fantasy;
+    font-family: 'Telex', sans-serif;
 }
 h1{
     font-weight: bolder;
 }
 img{
     height: 400px;
-    width: auto;
+    width: 575px;
 }
 .wrapper{
     width: 1024px;
@@ -32,4 +32,7 @@ img{
 }
 .answerbutton{
     margin: 10px;
+}
+#question-true-false, #timer{
+    font-size: 2rem;
 }
