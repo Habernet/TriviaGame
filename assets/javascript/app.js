@@ -42,11 +42,6 @@ var incorrect = 0;
 var currentQuestionNumber = 0;
 
 // Global Functions
-var inBetween = function () {
-    setTimeout(function () {
-        loadQuestion(questions[currentQuestionNumber]);
-    }, 3000);
-}
 var lastQuestion = function () {
     if (currentQuestionNumber < questions.length) {
         return false;
@@ -59,9 +54,6 @@ var clearTestArea = function () {
     $("#correct-image").empty();
     $("#question-true-false").empty();
     $("#timer").text("");
-    currentQuestionNumber++; 
-    timer = 10; 
-    clearInterval(countdown);  
 }
 
 var loadQuestion = function (questionobject) {
@@ -84,35 +76,51 @@ var pageTimer = function () {
 }
 
 var timesUp = function () {
-    incorrect++;
+    clearInterval(countdown);
+    timer = 10;
+    currentQuestionNumber++;
     clearTestArea();
     $("#question-true-false").text("Time's up! The correct answer is: " + currentQuestion.answer);
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
     if (!lastQuestion()) {
-        inBetween();
+        setTimeout(function () {
+            loadQuestion(questions[currentQuestionNumber]);
+        }, 3000);
     } else {
         gameOver();
     }
 }
 
 var chosenCorrectly = function () {
+    currentQuestionNumber++;
     correct++;
+    clearInterval(countdown);
+    timer = 10;
     clearTestArea();
     $("#question-true-false").text("Correct!");
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
-    if (!lastQuestion) {
-        inBetween();
+    if (currentQuestionNumber < questions.length) {
+        console.log("if works");
+        setTimeout(function () {
+            loadQuestion(questions[currentQuestionNumber]);
+        }, 3000);
     } else {
         gameOver();
     }
 }
 var chosenIncorrectly = function () {
+    currentQuestionNumber++;
     incorrect++;
+    clearInterval(countdown);
+    timer = 10;
     clearTestArea();
     $("#question-true-false").text("Incorrect! The correct answer is: " + currentQuestion.answer);
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
-    if (!lastQuestion) {
-        inBetween();
+    if (currentQuestionNumber < questions.length) {
+        console.log("if works");
+        setTimeout(function () {
+            loadQuestion(questions[currentQuestionNumber]);
+        }, 3000);
     } else {
         gameOver();
     }
@@ -121,7 +129,8 @@ var chosenIncorrectly = function () {
 var gameOver = function () {
     clearTestArea();
     $("#timer").remove();
-    var results = "Game over! You answered " + correct + "/" + incorrect + " correctly!"
+    var total = correct + incorrect;
+    var results = "Game over! You answered " + correct + "/" + total + " correctly!"
     $("#header-area").append("<h2>" + results + "</h2>");
 }
 
@@ -145,3 +154,9 @@ $(document).ready(function () {
         }
     })
 })
+
+
+
+// If you are on the last question it doesn't display correct or incorrect. Need to call at different points?
+// Look at refactoring code CORRECTLY
+// Add questions!
