@@ -53,6 +53,12 @@ questions = [
         answers: ["Daimler Benz DB-605", "Allison V-1710", "Rolls Royce Merlin", "Junkers Jumo 004"],
         answer: "Rolls Royce Merlin",
         IMGUrl: "assets/images/rollsroyce.jpg"
+    },
+    {
+        question: 'Which general was famously called "The Desert Fox"?',
+        answers: [ "George S. Patton", "Robert E. Lee", "Heinz Guderian", "Erwin Rommel"],
+        answer: "Erwin Rommel",
+        IMGUrl: "assets/images/rommel.jpg"
     }
 ]
 
@@ -64,12 +70,8 @@ var correct = 0;
 var currentQuestionNumber = 0;
 
 // Global Functions
-
 var clearTestArea = function () {
-    $("#answers").empty();
-    $("#correct-image").empty();
-    $("#question-true-false").empty();
-    $("#timer").text("");
+    $(".clear").empty();
 }
 var pageTimer = function () {
     timer--;
@@ -78,7 +80,6 @@ var pageTimer = function () {
         timesUp();
     }
 }
-
 var loadQuestion = function (questionobject) {
     currentQuestion = questionobject;
     clearTestArea();
@@ -96,8 +97,6 @@ var lastQuestion = function () {
         return true;
     }
 }
-
-
 var timesUp = function () {
     clearInterval(countdown);
     timer = 10;
@@ -115,7 +114,6 @@ var timesUp = function () {
         }, 3000);
     }
 }
-
 var chosenCorrectly = function () {
     currentQuestionNumber++;
     correct++;
@@ -152,18 +150,17 @@ var chosenIncorrectly = function () {
         }, 3000);
     }
 }
-
 var gameOver = function () {
     clearTestArea();
     $("#timer").remove();
     resultstimeout = setTimeout(function () {
         var results = "Game over! You answered " + correct + "/" + 9 + " correctly!"
-        // Do you only need to count the correct??
-        $("#header-area").append("<h2>" + results + "</h2>");
+        var resultsDiv = $("<h2>").addClass("centered").text(results);
+        $("#header-area").append(resultsDiv);
     })
 
 }
-
+// Event listeners
 $(document).ready(function () {
     $(".start").on("click", function () {
         $(".start").hide();
@@ -177,8 +174,3 @@ $(document).ready(function () {
         }
     })
 })
-
-
-
-// Look at refactoring code CORRECTLY
-// Add questions!
