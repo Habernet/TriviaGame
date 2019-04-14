@@ -64,7 +64,7 @@ questions = [
 
 
 // Global Variables
-var timer = 10;
+var timer = 25;
 var currentQuestion;
 var correct = 0;
 var currentQuestionNumber = 0;
@@ -99,7 +99,7 @@ var lastQuestion = function () {
 }
 var timesUp = function () {
     clearInterval(countdown);
-    timer = 10;
+    timer = 25;
     currentQuestionNumber++;
     clearTestArea();
     $("#question-true-false").text("Time's up! The correct answer is: " + currentQuestion.answer);
@@ -118,7 +118,7 @@ var chosenCorrectly = function () {
     currentQuestionNumber++;
     correct++;
     clearInterval(countdown);
-    timer = 10;
+    timer = 25;
     clearTestArea();
     $("#question-true-false").text("Correct!");
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
@@ -136,7 +136,7 @@ var chosenCorrectly = function () {
 var chosenIncorrectly = function () {
     currentQuestionNumber++;
     clearInterval(countdown);
-    timer = 10;
+    timer = 25;
     clearTestArea();
     $("#question-true-false").text("Incorrect! The correct answer is: " + currentQuestion.answer);
     $("#correct-image").html('<img src ="' + currentQuestion.IMGUrl + '">');
@@ -154,7 +154,7 @@ var gameOver = function () {
     clearTestArea();
     $("#timer").remove();
     resultstimeout = setTimeout(function () {
-        var results = "Game over! You answered " + correct + "/" + 9 + " correctly!"
+        var results = "Game over! You answered " + correct + "/" + 10 + " correctly!"
         var resultsDiv = $("<h2>").addClass("centered").text(results);
         $("#header-area").append(resultsDiv);
     })

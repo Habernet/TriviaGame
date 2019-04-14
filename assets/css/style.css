@@ -20,6 +20,9 @@ img{
     height: 400px;
     width: 575px;
 }
+.start{
+    background-color: #588213;
+}
 .wrapper{
     width: 1024px;
     margin: 0 auto;
